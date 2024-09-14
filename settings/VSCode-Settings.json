@@ -1,0 +1,142 @@
+{
+  "debug.console.fontFamily": "Source Code Pro",
+  "editor.fontWeight": "500",
+  "terminal.integrated.fontWeight": "600",
+  "debug.console.fontSize": 16, //Use 22 for Screen Recordings
+  "terminal.integrated.fontSize": 16, //Use 22 for Screen Recordings
+  "window.zoomLevel": 0, // Use 2 for Screen Recordings
+  "editor.formatOnSave": true,
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
+  },
+  "[plaintext]": {
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  },
+  "editor.quickSuggestionsDelay": 100,
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": false,
+  "zenMode.hideLineNumbers": false,
+  "workbench.settings.openDefaultSettings": true,
+  "workbench.settings.useSplitJSON": false,
+  "workbench.settings.editor": "json",
+  "workbench.startupEditor": "newUntitledFile",
+
+  "workbench.editorAssociations": {
+    "*.db": "sqlite-viewer.option",
+    "*.xlsx": "gc-excelviewer-excel-editor"
+  },
+  "editor.accessibilitySupport": "off",
+  "editor.mouseWheelZoom": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "terminal.integrated.cursorStyle": "line",
+  "files.autoSave": "afterDelay",
+  "editor.cursorBlinking": "expand",
+  "editor.fontLigatures": true,
+  "editor.accessibilityPageSize": 50,
+  "jupyter.askForKernelRestart": false,
+  "gitlens.currentLine.dateFormat": "",
+  "workbench.iconTheme": "material-icon-theme",
+  "explorer.confirmDelete": false,
+  "editor.stickyScroll.enabled": true,
+  "tabnine.experimentalAutoImports": true,
+  "workbench.sideBar.location": "right",
+  "workbench.list.defaultFindMode": "filter",
+  "editor.wordWrap": "off",
+  "editor.minimap.autohide": true,
+  "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+  "debug.terminal.clearBeforeReusing": true,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.tabs.location": "left",
+  "explorer.confirmDragAndDrop": false,
+  "editor.minimap.enabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["-v", "-s"],
+  "editor.stickyScroll.maxLineCount": 8,
+  "editor.fontSize": 13, //Use 22 for Screen Recordings
+  "editor.rulers": [90, 120],
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#ff000080",
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+      "--disable=missing-module-docstring",
+      "--disable=missing-class-docstring",
+      "--disable=missing-function-docstring"
+    ]
+  },
+  "breadcrumbs.symbolPath": "off",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "explorer.autoReveal": false,
+  "editor.fontFamily": "'JetBrains Mono','Fira Code',Menlo, Monaco, 'Courier New', monospace",
+  "editor.lineHeight": 1.7,
+  "editor.guides.bracketPairs": "active",
+  "git.autofetch": true,
+  "files.exclude": {
+    "**.pytest_cache": true,
+    "**/__pycache__": true
+  },
+  "workbench.list.typeNavigationMode": "automatic",
+  "git.confirmSync": false,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "debug.inlineValues": "on",
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "editor.defaultFormatter": "ms-python.autopep8",
+  "autopep8.args": ["--max-line-length", "120", "--experimental"],
+  "notebook.lineNumbers": "on",
+  "workbench.colorTheme": "Default Dark+",
+  "remote.autoForwardPortsSource": "hybrid",
+  "problems.showCurrentInStatus": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "workbench.preferredHighContrastColorTheme": "Default Dark+",
+  "pylint.args": [
+    "--disable=W1203",
+    "--disable=E0401",
+    "--disable=C0413",
+    "--disable=C0116"
+  ],
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  },
+  "cody.commandCodeLenses": true,
+  "cody.autocomplete.enabled": true,
+  "cody.autocomplete.advanced.provider": "fireworks",
+  "notebook.defaultFormatter": "ms-python.autopep8",
+  "cody.autocomplete.advanced.model": "starcoder-7b",
+  "aws.lambda.recentlyUploaded": {
+    "profile:default": {
+      "us-east-1": "domain_validator_lambda"
+    }
+  },
+  "isort.check": true
+}
