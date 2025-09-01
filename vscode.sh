@@ -13,7 +13,6 @@ extensions=(
     ms-python.debugpy
     esbenp.prettier-vscode
     znck.grammarly
-
     aaron-bond.better-comments
     adpyke.codesnap
     alexcvzz.vscode-sqlite
@@ -85,6 +84,7 @@ extensions=(
     wyattferguson.jinja2-snippet-kit
     yatki.vscode-surround
     yzhang.markdown-all-in-one
+    charliermarsh.ruff
     )
 
 # Get a list of all currently installed extensions.
