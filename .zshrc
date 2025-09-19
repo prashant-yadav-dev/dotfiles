@@ -1,35 +1,14 @@
-
-autoload -Uz colors && colors
-setopt PROMPT_SUBST
-
-# Load dotfiles:
-for file in ~/.{zprompt,aliases,private}; do
-    [ -r "$file" ] && [ -f "$file" ] && source "$file";
-done;
-unset file;
-
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export BUCKET_NAME="dacloud-api-dev"
-export GCS_KEY_FILE="/Users/prashant.yadav/Documents/ext-devops.json"
+
 # Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
+# load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-# ZSH_THEME="random"
-# ZSH_THEME="gozilla"
+ZSH_THEME="agnoster-custom"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -53,7 +32,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-DISABLE_MAGIC_FUNCTIONS="true"
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -91,7 +70,12 @@ DISABLE_MAGIC_FUNCTIONS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting pip)
+plugins=(
+  git 
+  zsh-autocomplete
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,32 +107,56 @@ alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias tree2="find . -not -path '*/\.*' -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias ptree="find . -not \( -path '*/\.*' -o -name '*.pyc' \) -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
-
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias py="python3"
-alias python="python3"
-alias py3.10="python3.10"
-alias py3.12="python3.12"
-alias pip="pip3"
 alias la="exa -la"
-alias gs="git status"
-alias py='python3'
+
+# Disable the default (venv) for custom venv prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+# Example aliases
+alias zshconfig="code ~/.zshrc"
+alias ohmyzsh="code ~/.oh-my-zsh"
+#alias for slack
+alias slack_status="$HOME/Documents/code/status && source venv/bin/activate && python3 status.py"
+
+# alias for docker
+alias d='docker'
+alias dps='docker ps'
+alias di='docker images'
+alias db='docker build -t'
+alias dr='docker run -it --rm'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias dlogs='docker logs -f --tail=100'
+alias dexec='docker exec -it'
+alias dstop='docker stop'
+alias dstart='docker start'
+alias drestart='docker restart'
+alias dkill='docker kill'
+alias dprune='docker system prune -f --volumes'
+# aliases for docker compose
+alias dc='docker compose'
+alias dcu='docker compose up'
+alias dcd='docker compose down'
+alias dcb='docker compose build'
+alias dcl='docker compose logs -f --tail=100'
+alias dce='docker compose exec'
+alias dcp='docker compose ps'
+alias dcr='docker compose restart'
+alias dci='docker compose images'
+alias dcf='docker compose stop && docker compose rm -f'
+
+# alias for terraform
 alias tf='terraform'
 
+#alias for git
+alias gs='git status'
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-export PATH="/usr/local/opt/postgresql@13/bin:$PATH"
+# alias for python
+alias py='python3'
+alias py3.10='python3.10'
+alias py3.11='python3.11'
+alias py3.12='python3.12'
+alias pip='pip3'
+alias venv='python3 -m venv venv && source venv/bin/activate'
+alias venv3.10='python3.10 -m venv venv && source venv/bin/activate'
+alias uvenv="uv venv && source .venv/bin/activate"
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform
-
-# bun completions
-[ -s "/Users/prashant.yadav/.bun/_bun" ] && source "/Users/prashant.yadav/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

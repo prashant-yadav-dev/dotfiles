@@ -77,12 +77,8 @@ $(brew --prefix)/bin/npm install --global prettier
 apps=(
     "google-chrome"
     "firefox"
-    "brave-browser"
-    "sublime-text"
     "visual-studio-code"
     "virtualbox"
-    "discord"
-    "google-drive"
     "postman"
     "pycharm"
     "pgadmin4"
@@ -90,6 +86,9 @@ apps=(
     "zoom"
     "ollama"
     "docker"
+    "slack"
+    "microsoft-teams"
+
     
 )
 
