@@ -160,3 +160,110 @@ alias venv='python3 -m venv venv && source venv/bin/activate'
 alias venv3.10='python3.10 -m venv venv && source venv/bin/activate'
 alias uvenv="uv venv && source .venv/bin/activate"
 
+
+# === Venv Activation Helper ===
+# activate_venv function usage:
+# 1. To activate the nearest venv (searches current and subdirectories):
+#    activate_venv
+# 2. To activate a specific named venv (e.g., 'myenv'):
+#    activate_venv myenv
+# 3. To create a new venv with a specific Python version if not found (e.g., python3.11):
+#    activate_venv myenv python3.11
+# 4. To create a new venv with default python3.10 if not found:
+#    activate_venv myenv  
+# 5. To create a new .venv with default python3.10 if not found:
+#    activate_venv
+# 6. To create a new .venv with specific python version if not found:
+#    activate_venv "" python3.11
+# Note: Ensure 'uv' is installed for automatic venv creation if needed.
+activate_venv() {
+  # Accept optional arguments: 
+  # $1: Specific VENV_NAME to search for/create. Defaults to flexible search.
+  # $2: Specific Python binary to use for creation. Defaults to python3.10.
+  local INPUT_VENV_NAME="$1"
+  local PYTHON_BIN="${2:-python3.10}" # Default python for creation is python3.10
+  local VENV_DIR=""
+
+  # Check if we are already in an activated environment
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    echo "Deactivating current virtual environment: $(basename "$VIRTUAL_ENV")"
+    deactivate
+  fi
+
+  # 1. Search for a venv directory in the current location or immediate subdirectories
+  
+  if [[ -n "$INPUT_VENV_NAME" ]]; then
+    # If a specific VENV_NAME is provided, look only for that
+    if [[ -d "$INPUT_VENV_NAME" ]]; then
+      VENV_DIR="$INPUT_VENV_NAME"
+    fi
+  else
+    # Prioritize the standard .venv directory in the current folder (if no specific name given)
+    if [[ -d ".venv" ]]; then
+      VENV_DIR=".venv"
+    fi
+
+    # If not found, search recursively up to depth 2 for directories containing 'venv'
+    if [[ -z "$VENV_DIR" ]]; then
+      # Search for directories containing 'venv' but exclude common ignored folders like .git, .vscode, etc.
+      # We rely on 'find' to give us a simple path to the first match.
+      VENV_DIR=$(find . -maxdepth 2 -type d -name '*venv*' \
+        ! -name '.*' ! -name 'node_modules' \
+        ! -path './.git*' ! -path './.vscode*' 2>/dev/null | head -n 1)
+      
+      if [[ -n "$VENV_DIR" ]]; then
+        # Clean up the path prefix if 'find' returned './<path>'
+        VENV_DIR="${VENV_DIR#./}"
+      fi
+    fi
+  fi
+  
+  # 2. If VENV_DIR is still empty, attempt to create it using uv
+  if [[ -z "$VENV_DIR" ]]; then
+    # Venv not found. Try to create with uv.
+    if command -v uv &> /dev/null; then
+      
+      # Determine the name of the VENV to create (use input or default to .venv)
+      local VENV_TO_CREATE="${INPUT_VENV_NAME:-.venv}"
+
+      echo "No existing virtual environment found. Attempting to create one named '$VENV_TO_CREATE' using '$PYTHON_BIN'..."
+      
+      # Use the specified python binary for creation
+      if uv venv "$VENV_TO_CREATE" --python "$PYTHON_BIN"; then
+        echo "Successfully created virtual environment: $VENV_TO_CREATE"
+        VENV_DIR="$VENV_TO_CREATE"
+      else
+        echo "Error: Failed to create virtual environment '$VENV_TO_CREATE'. Ensure '$PYTHON_BIN' is installed and available."
+        return 1
+      fi
+    else
+      # uv not found, so we can't create it.
+      echo "Error: No virtual environment directory found, and 'uv' is not installed for automatic creation."
+      echo "Please ensure your virtual environment is created, or install 'uv'."
+      return 1
+    fi
+  fi
+
+  # 3. Construct the full path to the activation script
+  local ACTIVATE_SCRIPT=""
+
+  # Common Linux/macOS activation script path
+  if [[ -f "$VENV_DIR/bin/activate" ]]; then
+    ACTIVATE_SCRIPT="$VENV_DIR/bin/activate"
+  
+  # Common Windows activation script path (e.g., used when running Git Bash or WSL)
+  elif [[ -f "$VENV_DIR/Scripts/activate" ]]; then
+    ACTIVATE_SCRIPT="$VENV_DIR/Scripts/activate"
+  fi
+
+  if [[ -z "$ACTIVATE_SCRIPT" ]]; then
+    echo "Error: Activation script not found in '$VENV_DIR'."
+    return 1
+  fi
+
+  # 4. Source the script to activate the environment
+  echo "Activating virtual environment: $VENV_DIR"
+  source "$ACTIVATE_SCRIPT"
+}
+
+# === End Venv Activation Helper ===
